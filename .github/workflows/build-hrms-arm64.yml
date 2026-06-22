@@ -37,7 +37,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Write apps.json for build secret
-        run: echo '${{ secrets.APPS_JSON }}' > /tmp/apps.json
+        env:
+          APPS_JSON: ${{ secrets.APPS_JSON }}
+        run: echo "$APPS_JSON" > /tmp/apps.json && cat /tmp/apps.json | python3 -m json.tool > /dev/null && echo "apps.json valid"
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -54,5 +56,4 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v16
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          no-cache: true
