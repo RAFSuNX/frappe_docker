@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}/frappe-hrms
+  IMAGE_NAME: rafsunx/frappe-hrms
 
 jobs:
   build:
